@@ -24,6 +24,11 @@ private static final shelfRepository INSTANCE = new shelfRepository();
 	protected String getAllEntities() {
 		return Shelf.GET_ALL_SHELVES;
 	}
+
+	@Override
+	protected String getAllEntitiesIds() {
+		return Shelf.GET_ALL_SHELVES_IDS;
+	}
 	
 	
 //	public ArrayList<Long> getShelfCenas() {

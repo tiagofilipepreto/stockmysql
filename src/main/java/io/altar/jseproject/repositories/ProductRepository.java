@@ -6,14 +6,17 @@ public class ProductRepository extends EntityRepository<Product> {
 
 	@Override
 	protected Class<Product> getEntityClass() {
-		// TODO Auto-generated method stub
 		return Product.class;
 	}
 
 	@Override
 	protected String getAllEntities() {
-		// TODO Auto-generated method stub
 		return Product.GET_ALL_PRODUCTS;
+	}
+
+	@Override
+	protected String getAllEntitiesIds() {
+		return Product.GET_ALL_PRODUCTS_IDS;
 	}
 	
 	

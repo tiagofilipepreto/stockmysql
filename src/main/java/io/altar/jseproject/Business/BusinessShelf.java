@@ -6,15 +6,22 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import javax.inject.Inject;
+
 import org.apache.commons.lang3.ArrayUtils;
 
+import io.altar.jseproject.model.Product;
 import io.altar.jseproject.model.Shelf;
+import io.altar.jseproject.repositories.shelfRepository;
 
 
 public class BusinessShelf extends BusinessEntity<Shelf> implements BusinessShelfInterface {
 
 	public static final BusinessProducts BUSINESS_PRODUCTS = new BusinessProducts();
-
+	
+    @Inject
+    protected shelfRepository SHELF_REP_INSTACE;
+    
 	@Override
 	public void create(Shelf t) {
 		SHELF_REP_INSTACE.addEntity(t);
@@ -36,7 +43,7 @@ public class BusinessShelf extends BusinessEntity<Shelf> implements BusinessShel
 	}
 	@Override
 	public void update(Shelf t) {
-//		getValidEntity(t.getId());
+		getValidEntity(t.getId());
 //		 long ProductIdAntigo = read(t.getId()).getProductId();
 //		BUSINESS_PRODUCTS.updateProductsId(t.getId(),t.getProductId(),ProductIdAntigo);
 		SHELF_REP_INSTACE.editEntity(t);
@@ -50,11 +57,16 @@ public class BusinessShelf extends BusinessEntity<Shelf> implements BusinessShel
 	@Override
 	public Collection<Long> getAllIDs() {
 		return null;
+		
+      
 	}
-	@Override
-	public long[] getAllIdsarray() {
-		return SHELF_REP_INSTACE.geAllIdsarray();
-	}
+	 public Product getProductById(long id){
+			return BUSINESS_PRODUCTS.getId(id);
+		}
+//	@Override
+//	public long[] getAllIdsarray() {
+//		return SHELF_REP_INSTACE.geAllIdsarray();
+//	}
 	@Override
 	public void updateProductsId(List<Long> shelvesIdAntigos, List<Long> shelvesIdNovos, long id) {
 //		for(long did : shelvesIdAntigos){
@@ -80,11 +92,6 @@ public class BusinessShelf extends BusinessEntity<Shelf> implements BusinessShel
 		return "A Prateleira";
 	}
 	
-	@Override
-	public void printaAll() {
-		SHELF_REP_INSTACE.printAll();
-		
-	}
 	@Override
 	public Collection<Shelf> getAll() {
 		return SHELF_REP_INSTACE.getAll();

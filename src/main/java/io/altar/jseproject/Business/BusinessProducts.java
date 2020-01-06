@@ -5,20 +5,24 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.altar.jseproject.model.Product;
-import io.altar.jseproject.model.Shelf;
+import io.altar.jseproject.repositories.ProductRepository;
 
 
 public class BusinessProducts extends BusinessEntity <Product> implements BusinessProductsInterface {
 
-	public static final BusinessShelf BUSINESS_SHELVES = new BusinessShelf();
+//	public static final BusinessShelf BUSINESS_SHELVES = new BusinessShelf();
 
+	@Inject
+	protected ProductRepository PROD_REP_INSTACE;
+	
 	@Override
 	public void create(Product t) {
 		validEntityProducts(t);
 		PROD_REP_INSTACE.addEntity(t);
-//		BUSINESS_SHELVES.updateProductsId(new ArrayList<Long>(),t.getShelvesId(),t.getId());
-		
+//		BUSINESS_SHELVES.updateProductsId(new ArrayList<Long>(),t.getShelvesId(),t.getId());	
 	}
 	@Override
 	public Product read(long id) {
@@ -47,19 +51,15 @@ public class BusinessProducts extends BusinessEntity <Product> implements Busine
 	public boolean isEmpty() {
 		return PROD_REP_INSTACE.isEmpty();
 	}
-	@Override
-	public void printaAll() {
-		PROD_REP_INSTACE.printAll();
-		
-	}
+
 	@Override
 	public Collection<Long> getAllIDs() {
 		return null;
 	}
-	@Override
-	public long[] getAllIdsarray() {
-		return PROD_REP_INSTACE.geAllIdsarray();
-	}
+//	@Override
+//	public long[] getAllIdsarray() {
+//		return PROD_REP_INSTACE.geAllIdsarray();
+//	}
 	@Override
 	public void updateProductsId(long ShelfeId, long ProductIdNovo, long ProductIdAntigo) {
 //		if(ProductIdAntigo >0) {

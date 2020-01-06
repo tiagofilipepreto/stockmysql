@@ -2,8 +2,11 @@ package io.altar.jseproject.Business;
 
 import java.util.Collection;
 
+import javax.transaction.Transactional;
+
 import io.altar.jseproject.model.Entityy;
 
+@Transactional
 public abstract class BusinessEntity <T extends Entityy> {
 	
 	

@@ -19,6 +19,8 @@ import javax.ws.rs.core.UriInfo;
 import io.altar.jseproject.Business.BusinessEntity;
 import io.altar.jseproject.model.Entityy;
 import io.altar.jseproject.model.Product;
+import io.altar.jseproject.model.Shelf;
+import io.altar.jseproject.model.ShelfDTO;
 
 public abstract class Controler <T extends BusinessEntity<E>,E extends Entityy>{
 	
@@ -80,11 +82,11 @@ public abstract class Controler <T extends BusinessEntity<E>,E extends Entityy>{
 		}
 	}
 	
-	@GET
-	@Produces("application/json")
-	public Collection<E> getProduct() {
-		return service.getAll();
-	}
+//	@GET
+//	@Produces("application/json")
+//	public Collection<E> getProduct() {
+//		return service.getAll();
+//	}
 	
 	@GET
 	@Path("isEmpty")
@@ -99,6 +101,8 @@ public abstract class Controler <T extends BusinessEntity<E>,E extends Entityy>{
 	public long[] geAllIdsarray() {
 		return service.getAllIdsarray();
 	}
+	
+	
 	
 	
 	

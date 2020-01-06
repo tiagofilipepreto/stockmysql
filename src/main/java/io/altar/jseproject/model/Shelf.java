@@ -9,11 +9,15 @@ import javax.persistence.NamedQuery;
 
 @Entity
 @NamedQueries({
-	@NamedQuery(name = Shelf.GET_ALL_SHELVES, query = "SELECT s FROM Shelf s")
+	@NamedQuery(name = Shelf.GET_ALL_SHELVES, query = "SELECT s FROM Shelf s"),
+	@NamedQuery(name = Shelf.GET_ALL_SHELVES_IDS, query = "SELECT s.id FROM Product s"),
+	@NamedQuery(name = Shelf.GET_SHELVES_COUNT, query = "SELECT COUNT(s.id) FROM Product s")
 })
 public class Shelf extends Entityy implements Serializable {
 	
 	public static final String GET_ALL_SHELVES = "getAllShelves";
+	public static final String GET_ALL_SHELVES_IDS = "getAllShelvesIds";
+	public static final String GET_SHELVES_COUNT = "getShelvesCount";
 	
 	private static final long serialVersionUID = 1L;
 	

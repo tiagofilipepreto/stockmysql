@@ -22,9 +22,7 @@ public interface BusinesssInterface <T extends Entityy>{
 	
 	boolean isEmpty();
 	
-	void printaAll();
-	
-	long[] getAllIdsarray();
+//	long[] getAllIdsarray();
 	
 	Collection<T> getAll();
 	

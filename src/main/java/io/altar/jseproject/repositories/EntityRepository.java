@@ -20,17 +20,19 @@ public abstract class EntityRepository<T extends Entityy> {
 	@PersistenceContext(unitName ="database")
 	protected EntityManager em;
 
-	public void addEntity(T t) {
-		em.merge(t);
-	};
 	
 	protected abstract Class<T> getEntityClass();
-	
+	protected abstract String getAllEntitiesIds();
 	protected abstract String getAllEntities();
 	
 	public List<T> getAll(){
 		return em.createNamedQuery(getAllEntities(), getEntityClass()).getResultList();
 	}
+	
+
+	public void addEntity(T t) {
+		em.merge(t);
+	};
 	
 	public void removeEntity(long Id) {
 		T entity = getEntity(Id);
@@ -38,18 +40,7 @@ public abstract class EntityRepository<T extends Entityy> {
 			em.remove(entity);
 		}
 	}; 
-	
 
-//	
-//	
-//	public boolean isEmpty() {
-//		return (myMap.size() == 0)?true:false;
-//	}
-//	
-//	public Collection<T> getAll(){
-//		return myMap.values();
-//	}
-//	
 	public T getEntity(long Id) {
 		T entity = em.find(getEntityClass(), Id);
 		return  entity ;
@@ -59,6 +50,20 @@ public abstract class EntityRepository<T extends Entityy> {
 	public void editEntity( T entity) {
 		em.merge(entity);
 	}
+	
+
+//	public long[] geAllIdsarray(){
+//		return getAllEntitiesIds().split(" ");
+//	}
+	
+	public boolean isEmpty() {
+		return getAll().isEmpty();
+	}
+//	
+//	public Collection<T> getAll(){
+//		return myMap.values();
+//	}
+//	
 //	
 //	public Collection<Long> getAllIDs(){
 //		return myMap.keySet();
