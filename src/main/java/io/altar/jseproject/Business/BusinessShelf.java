@@ -1,30 +1,26 @@
 package io.altar.jseproject.Business;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-
-import org.apache.commons.lang3.ArrayUtils;
 
 import io.altar.jseproject.model.Product;
 import io.altar.jseproject.model.Shelf;
 import io.altar.jseproject.repositories.shelfRepository;
 
+@RequestScoped
+public class BusinessShelf extends BusinessEntity<shelfRepository,Shelf> implements BusinessShelfInterface {
 
-public class BusinessShelf extends BusinessEntity<Shelf> implements BusinessShelfInterface {
-
-	public static final BusinessProducts BUSINESS_PRODUCTS = new BusinessProducts();
+	@Inject
+	BusinessProducts BUSINESS_PRODUCTS;
 	
-    @Inject
-    protected shelfRepository SHELF_REP_INSTACE;
+    
     
 	@Override
 	public void create(Shelf t) {
-		SHELF_REP_INSTACE.addEntity(t);
+		repository.addEntity(t);
 		
 	}
 	@Override
@@ -34,10 +30,10 @@ public class BusinessShelf extends BusinessEntity<Shelf> implements BusinessShel
 
 	@Override
 	public void delete(long id) {
-//		getValidEntity(id);
+		getValidEntity(id);
 //		long idProduct =read(id).getProductId();
 //		BUSINESS_PRODUCTS.updateProductsId(id,0,idProduct);
-		SHELF_REP_INSTACE.removeEntity(id);
+		repository.removeEntity(id);
 		
 		
 	}
@@ -46,12 +42,12 @@ public class BusinessShelf extends BusinessEntity<Shelf> implements BusinessShel
 		getValidEntity(t.getId());
 //		 long ProductIdAntigo = read(t.getId()).getProductId();
 //		BUSINESS_PRODUCTS.updateProductsId(t.getId(),t.getProductId(),ProductIdAntigo);
-		SHELF_REP_INSTACE.editEntity(t);
+		repository.editEntity(t);
 		
 	}
 	@Override
 	public boolean isEmpty() {
-		return SHELF_REP_INSTACE.isEmpty();
+		return repository.isEmpty();
 	}
 	
 	@Override
@@ -68,18 +64,18 @@ public class BusinessShelf extends BusinessEntity<Shelf> implements BusinessShel
 //		return SHELF_REP_INSTACE.geAllIdsarray();
 //	}
 	@Override
-	public void updateProductsId(List<Long> shelvesIdAntigos, List<Long> shelvesIdNovos, long id) {
-//		for(long did : shelvesIdAntigos){
-//			Shelf shelvesIdDelete=SHELF_REP_INSTACE.getEntity(did);
-//			shelvesIdDelete.setProductId(0);
-//			SHELF_REP_INSTACE.editEntity(shelvesIdDelete);
-//		
-//		}
-//		for(long sid : shelvesIdNovos){
-//			Shelf shelvesIdAdd=SHELF_REP_INSTACE.getEntity(sid);
-//			shelvesIdAdd.setProductId(id);
-//			SHELF_REP_INSTACE.editEntity(shelvesIdAdd);
-//		}
+	public void updateProductsId(List<Shelf> shelvesAntigos, List<Shelf> shelvesNovos, long id) {
+		for(Shelf did : shelvesAntigos){
+			Shelf shelvesIdDelete=repository.getEntity(did);
+			shelvesIdDelete.setProduct(null);;
+			repository.editEntity(shelvesIdDelete);
+		
+		}
+		for(Shelf sid : shelvesNovos){
+			Shelf shelvesIdAdd=repository.getEntity(sid);
+			shelvesIdAdd.setProductId(id);
+			repository.editEntity(shelvesIdAdd);
+		}
 
 	
 	}
@@ -94,12 +90,12 @@ public class BusinessShelf extends BusinessEntity<Shelf> implements BusinessShel
 	
 	@Override
 	public Collection<Shelf> getAll() {
-		return SHELF_REP_INSTACE.getAll();
+		return repository.getAll();
 	}
 	@Override
 	public Shelf getId(long id) {
 		
-		return SHELF_REP_INSTACE.getEntity(id);
+		return repository.getEntity(id);
 	}
 	@Override
 	public Shelf validEntityShelfes(Shelf t) {

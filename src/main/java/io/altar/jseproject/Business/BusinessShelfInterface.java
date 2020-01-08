@@ -8,6 +8,6 @@ import io.altar.jseproject.repositories.shelfRepository;
 
 public interface BusinessShelfInterface extends BusinesssInterface<Shelf> {
 
-		void updateProductsId(List <Long> shelvesIdAntigos, List <Long> shelvesIdNovos, long id);
+		void updateProductsId(List <Shelf> shelvesIdAntigos, List <Shelf> shelvesIdNovos, long id);
 		Shelf validEntityShelfes(Shelf t);
 }

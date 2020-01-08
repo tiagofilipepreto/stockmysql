@@ -2,14 +2,18 @@ package io.altar.jseproject.Business;
 
 import java.util.Collection;
 
+import javax.inject.Inject;
 import javax.transaction.Transactional;
 
 import io.altar.jseproject.model.Entityy;
+import io.altar.jseproject.repositories.EntityRepository;
+import io.altar.jseproject.repositories.ProductRepository;
 
 @Transactional
-public abstract class BusinessEntity <T extends Entityy> {
+public abstract class BusinessEntity <R extends EntityRepository<T>, T extends Entityy> {
 	
-	
+	@Inject
+	protected R repository;
 
 	public void create(T t) {
 		// TODO Auto-generated method stub

@@ -5,24 +5,26 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import io.altar.jseproject.model.Product;
+import io.altar.jseproject.model.Shelf;
 import io.altar.jseproject.repositories.ProductRepository;
 
-
-public class BusinessProducts extends BusinessEntity <Product> implements BusinessProductsInterface {
-
-//	public static final BusinessShelf BUSINESS_SHELVES = new BusinessShelf();
+@RequestScoped
+public class BusinessProducts extends BusinessEntity <ProductRepository,Product> implements BusinessProductsInterface {
 
 	@Inject
-	protected ProductRepository PROD_REP_INSTACE;
+	BusinessShelf BUSINESS_SHELVES;
+
+	
 	
 	@Override
 	public void create(Product t) {
 		validEntityProducts(t);
-		PROD_REP_INSTACE.addEntity(t);
-//		BUSINESS_SHELVES.updateProductsId(new ArrayList<Long>(),t.getShelvesId(),t.getId());	
+		repository.addEntity(t);
+		BUSINESS_SHELVES.updateProductsId(new ArrayList<Shelf>(),t.getShelves(),t.getId());	
 	}
 	@Override
 	public Product read(long id) {
@@ -31,31 +33,34 @@ public class BusinessProducts extends BusinessEntity <Product> implements Busine
 
 	@Override
 	public void delete(long id) {
-//		getValidEntity(id);
+		getValidEntity(id);
 //		 List <Long>shelvesIdAntigos = read(id).getShelvesId();
-		PROD_REP_INSTACE.removeEntity(id);
+		repository.removeEntity(id);
 //		BUSINESS_SHELVES.updateProductsId(shelvesIdAntigos,new ArrayList<Long>(),id);
 		
 	}
 	
 	@Override
 	public void update(Product t) {
-//		getValidEntity(t.getId());
-//		validEntityProducts(t);
+		getValidEntity(t.getId());
+		validEntityProducts(t);
 //		List <Long>shelvesIdAntigos = read(t.getId()).getShelvesId();
-		PROD_REP_INSTACE.editEntity(t);
+		repository.editEntity(t);
 //		BUSINESS_SHELVES.updateProductsId(shelvesIdAntigos,t.getShelvesId(),t.getId());
 		}
 	
 	@Override
 	public boolean isEmpty() {
-		return PROD_REP_INSTACE.isEmpty();
+		return repository.isEmpty();
 	}
 
 	@Override
 	public Collection<Long> getAllIDs() {
 		return null;
 	}
+	 public Shelf getShelfById(long id){
+			return BUSINESS_SHELVES.getId(id);
+		}
 //	@Override
 //	public long[] getAllIdsarray() {
 //		return PROD_REP_INSTACE.geAllIdsarray();
@@ -80,14 +85,14 @@ public class BusinessProducts extends BusinessEntity <Product> implements Busine
 //	}
 	@Override
 	public Collection<Product> getAll() {
-		return PROD_REP_INSTACE.getAll();
+		return repository.getAll();
 	}
 	public String getName() {
 		return "O Producto";
 	}
 	@Override
 	public Product getId(long id) {
-		return PROD_REP_INSTACE.getEntity(id);
+		return repository.getEntity(id);
 	}
 	@Override
 	public Product validEntityProducts(Product t) {

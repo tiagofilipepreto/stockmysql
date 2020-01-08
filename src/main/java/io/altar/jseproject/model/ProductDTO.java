@@ -3,7 +3,8 @@ package io.altar.jseproject.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductDTO extends Entityy {
+public class ProductDTO extends EntityyDTO {
+		private long id;
 		private String nome;
 		private float initprice;
 		private int discount;
@@ -25,13 +26,25 @@ public class ProductDTO extends Entityy {
 		}
 
 
-		public ProductDTO(String nome,float initprice,int discount, int iva, List<Long> shelvesId, float pvp) {
+		public ProductDTO(long id, String nome,float initprice,int discount, int iva, List<Long> shelvesId, float pvp) {
+			this.id =id;
 			this.nome= nome;
 			this.initprice= initprice;
 			this.discount = discount;
 			this.iva = iva;
 			this.shelvesId = shelvesId;
 			this.pvp=pvp;
+		}
+
+		
+		
+		public long getId() {
+			return id;
+		}
+
+
+		public void setId(long id) {
+			this.id = id;
 		}
 
 

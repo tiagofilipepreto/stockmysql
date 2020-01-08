@@ -1,19 +1,11 @@
 package io.altar.jseproject.repositories;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import io.altar.jseproject.model.Entityy;
-import io.altar.jseproject.model.Product;
-import io.altar.jseproject.model.Shelf;
 
 public abstract class EntityRepository<T extends Entityy> {
 	

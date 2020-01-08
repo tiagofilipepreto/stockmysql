@@ -1,7 +1,6 @@
 package io.altar.jseproject.controler;
 
-import java.util.Collection;
-
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -15,15 +14,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-
 import io.altar.jseproject.Business.BusinessEntity;
 import io.altar.jseproject.model.Entityy;
-import io.altar.jseproject.model.Product;
-import io.altar.jseproject.model.Shelf;
-import io.altar.jseproject.model.ShelfDTO;
+import io.altar.jseproject.model.EntityyDTO;
+import io.altar.jseproject.repositories.EntityRepository;
 
-public abstract class Controler <T extends BusinessEntity<E>,E extends Entityy>{
-	
+public abstract class Controler <T extends BusinessEntity<R,E>,R extends EntityRepository<E>,E extends Entityy, D extends EntityyDTO>{
+	@Inject
 	protected T service;
 	@Context
 	protected UriInfo context;
@@ -38,11 +35,12 @@ public abstract class Controler <T extends BusinessEntity<E>,E extends Entityy>{
 	
 	@POST
 	@Consumes("application/json")
-	public Response addProduct(E t) {
+	public Response addProduct(D d) {
 		try {
-			service.create(t);
+			service.create(fromDTO(d));
 			return Response.ok().build();
 		} catch (Exception e) {
+			e.printStackTrace();
 			return Response.status(404).entity(e.getMessage()).build();
 		}
 		
@@ -50,9 +48,9 @@ public abstract class Controler <T extends BusinessEntity<E>,E extends Entityy>{
 	
 	@PUT
 	@Consumes("application/json")
-	public Response editProduct(E t) {
+	public Response editProduct(D d) {
 		try {
-			service.update(t);
+			service.update(fromDTO(d));
 			return Response.ok().build();
 		} catch (Exception e) {
 			return Response.status(404).entity(e.getMessage()).build();
@@ -64,8 +62,8 @@ public abstract class Controler <T extends BusinessEntity<E>,E extends Entityy>{
 	@Produces("application/json")
 	public Response getProduct(@PathParam("id")long id) {
 		try {
-			return Response.ok().entity(service.read(id)).build();
-		} catch (Exception e) {
+			return Response.ok().entity(toDTO(service.read(id))).build();
+		} catch (RuntimeException e) {
 			return Response.status(400).entity(e.getMessage()).build();
 		}
 		
@@ -82,11 +80,6 @@ public abstract class Controler <T extends BusinessEntity<E>,E extends Entityy>{
 		}
 	}
 	
-//	@GET
-//	@Produces("application/json")
-//	public Collection<E> getProduct() {
-//		return service.getAll();
-//	}
 	
 	@GET
 	@Path("isEmpty")
@@ -102,6 +95,8 @@ public abstract class Controler <T extends BusinessEntity<E>,E extends Entityy>{
 		return service.getAllIdsarray();
 	}
 	
+	public abstract D toDTO(E e);
+	public abstract E fromDTO(D d);
 	
 	
 	

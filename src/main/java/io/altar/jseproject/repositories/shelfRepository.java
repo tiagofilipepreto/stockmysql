@@ -1,19 +1,12 @@
 package io.altar.jseproject.repositories;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import javax.enterprise.context.RequestScoped;
 
 import io.altar.jseproject.model.Shelf;
 
+@RequestScoped
 public class shelfRepository extends EntityRepository<Shelf> {
 
-private static final shelfRepository INSTANCE = new shelfRepository();
-	
-//	public shelfRepository() {}
-//	
-//	public static shelfRepository getInstance() {
-//		return INSTANCE;
-//	}
 
 	@Override
 	protected Class<Shelf> getEntityClass() {

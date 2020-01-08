@@ -1,17 +1,13 @@
 package io.altar.jseproject.model;
 
-public class ShelfDTO extends Entityy{
+public class ShelfDTO extends EntityyDTO{
+	private long id;
 	private int capacidade;
 	private long productId;
 	private float dailyPrice;
 	
-	
-	
-	public ShelfDTO() {
-		super();
-	}
-	
-	
+
+
 	public ShelfDTO(int capacidade, float dailyPrice) {
 		super();
 		this.capacidade = capacidade;
@@ -19,14 +15,27 @@ public class ShelfDTO extends Entityy{
 	}
 
 
-	public ShelfDTO(int capacidade, long productId, float dailyPrice) {
+	public ShelfDTO(long id,int capacidade, long productId, float dailyPrice) {
 		super();
+		this.id = id;
 		this.capacidade = capacidade;
 		this.productId = productId;
 		this.dailyPrice = dailyPrice;
 	}
 
+	public ShelfDTO() {
+		super();
+	}
+	
+	
+	public long getId() {
+		return id;
+	}
 
+
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	public int getCapacidade() {
 		return capacidade;
