@@ -1,13 +1,14 @@
 package io.altar.jseproject.Business;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import io.altar.jseproject.model.Product;
-import io.altar.jseproject.repositories.ProductRepository;
+import io.altar.jseproject.model.Shelf;
+
 
 public interface BusinessProductsInterface extends BusinesssInterface<Product> {
 	
 	void updateProductsId(long ShelfeId, long ProductIdNovo, long ProductIdAntigo);
-	ArrayList<Long> getshelvesId();
+	List<Shelf> getAllEmptyShelves();
 	Product validEntityProducts(Product t);
 }

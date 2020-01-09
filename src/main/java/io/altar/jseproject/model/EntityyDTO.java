@@ -2,7 +2,7 @@ package io.altar.jseproject.model;
 
 public class EntityyDTO {
 
-	private long id;
+	protected long id;
 
 	public long getId() {
 		return id;

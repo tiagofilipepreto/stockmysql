@@ -53,6 +53,7 @@ public abstract class Controler <T extends BusinessEntity<R,E>,R extends EntityR
 			service.update(fromDTO(d));
 			return Response.ok().build();
 		} catch (Exception e) {
+			e.printStackTrace();
 			return Response.status(404).entity(e.getMessage()).build();
 	}
 	}
@@ -64,6 +65,7 @@ public abstract class Controler <T extends BusinessEntity<R,E>,R extends EntityR
 		try {
 			return Response.ok().entity(toDTO(service.read(id))).build();
 		} catch (RuntimeException e) {
+			e.printStackTrace();
 			return Response.status(400).entity(e.getMessage()).build();
 		}
 		
@@ -76,6 +78,7 @@ public abstract class Controler <T extends BusinessEntity<R,E>,R extends EntityR
 			service.delete(id);
 			return Response.status(204).build();
 		} catch (Exception e) {
+			e.printStackTrace();
 			return Response.status(400).entity(e.getMessage()).build();
 		}
 	}

@@ -23,8 +23,9 @@ public class BusinessProducts extends BusinessEntity <ProductRepository,Product>
 	@Override
 	public void create(Product t) {
 		validEntityProducts(t);
+		t.getShelves().forEach(shelf ->{shelf.setProduct(t);});
 		repository.addEntity(t);
-		BUSINESS_SHELVES.updateProductsId(new ArrayList<Shelf>(),t.getShelves(),t.getId());	
+
 	}
 	@Override
 	public Product read(long id) {
@@ -34,9 +35,10 @@ public class BusinessProducts extends BusinessEntity <ProductRepository,Product>
 	@Override
 	public void delete(long id) {
 		getValidEntity(id);
-//		 List <Long>shelvesIdAntigos = read(id).getShelvesId();
+		if (!read(id).getShelves().isEmpty()) {
+			throw new IllegalArgumentException("Nao pode eliminar porque a producto ainda tem esta numa prateleira.");
+		}
 		repository.removeEntity(id);
-//		BUSINESS_SHELVES.updateProductsId(shelvesIdAntigos,new ArrayList<Long>(),id);
 		
 	}
 	
@@ -44,9 +46,10 @@ public class BusinessProducts extends BusinessEntity <ProductRepository,Product>
 	public void update(Product t) {
 		getValidEntity(t.getId());
 		validEntityProducts(t);
-//		List <Long>shelvesIdAntigos = read(t.getId()).getShelvesId();
+		List <Shelf>shelvesIdAntigos = read(t.getId()).getShelves();
+		BUSINESS_SHELVES.updateProductsId(shelvesIdAntigos);
+		t.getShelves().forEach(shelf ->{shelf.setProduct(t);});
 		repository.editEntity(t);
-//		BUSINESS_SHELVES.updateProductsId(shelvesIdAntigos,t.getShelvesId(),t.getId());
 		}
 	
 	@Override
@@ -61,6 +64,17 @@ public class BusinessProducts extends BusinessEntity <ProductRepository,Product>
 	 public Shelf getShelfById(long id){
 			return BUSINESS_SHELVES.getId(id);
 		}
+	 @Override
+	 public Collection<Product> getAll() {
+		 return repository.getAll();
+	 }
+	 public String getName() {
+		 return "O Producto";
+	 }
+	 @Override
+	 public Product getId(long id) {
+		 return repository.getEntity(id);
+	 }
 //	@Override
 //	public long[] getAllIdsarray() {
 //		return PROD_REP_INSTACE.geAllIdsarray();
@@ -76,23 +90,11 @@ public class BusinessProducts extends BusinessEntity <ProductRepository,Product>
 //			Product productIdedit=PROD_REP_INSTACE.getEntity(ProductIdNovo);
 //			productIdedit.addShelvesId(ShelfeId);
 //			PROD_REP_INSTACE.editEntity(productIdedit);
-//		}
-		
-	}
-//	@Override
-//	public ArrayList<Long> getshelvesId() {
-//		return BUSINESS_SHELVES.getshelvesId();
-//	}
-	@Override
-	public Collection<Product> getAll() {
-		return repository.getAll();
-	}
-	public String getName() {
-		return "O Producto";
+//		}	
 	}
 	@Override
-	public Product getId(long id) {
-		return repository.getEntity(id);
+	public List<Shelf> getAllEmptyShelves() {
+		return BUSINESS_SHELVES.getshelvesEmpty();
 	}
 	@Override
 	public Product validEntityProducts(Product t) {
@@ -112,23 +114,19 @@ public class BusinessProducts extends BusinessEntity <ProductRepository,Product>
 				errormsg += "Iva tem de ser 6, 13 ou 23. \n";
 			}
 		
-		List <Long> avaShelvesId = getshelvesId();
-//		if (t.getId() != null) {
-//			avaShelvesId.addAll(PROD_REP_INSTACE.getEntity(t.getId()).getShelvesId());
+//		List<Shelf> avaShelves = getAllEmptyShelves();
+//		if (t.getId() != 0) {
+//			avaShelves.addAll(repository.getEntity(t.getId()).getShelves());
 //		}
-//		if(!avaShelvesId.containsAll(t.getShelvesId())) {
-//			errormsg += "Prateleiras disponiveis: "+ avaShelvesId;
+//		if(!avaShelves.containsAll(t.getShelves())) {
+//			errormsg += "Prateleiras disponiveis: "+ avaShelves;
 //		}
 		if (!errormsg.isEmpty()) {
 			throw new IllegalArgumentException(errormsg);
 		}
 		return t;
 	}
-	@Override
-	public ArrayList<Long> getshelvesId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 	
 	
 }

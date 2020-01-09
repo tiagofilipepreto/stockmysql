@@ -1,5 +1,7 @@
 package io.altar.jseproject.repositories;
 
+import java.util.List;
+
 import javax.enterprise.context.RequestScoped;
 
 import io.altar.jseproject.model.Shelf;
@@ -22,6 +24,14 @@ public class shelfRepository extends EntityRepository<Shelf> {
 	protected String getAllEntitiesIds() {
 		return Shelf.GET_ALL_SHELVES_IDS;
 	}
+	
+	public List<Shelf> getAllEmptyShelves() {
+		return em.createNamedQuery(Shelf.GET_EMPTY_SHELVES, getEntityClass()).getResultList();
+	}
+	
+	
+	
+	
 	
 	
 //	public ArrayList<Long> getShelfCenas() {

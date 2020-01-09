@@ -31,8 +31,9 @@ public class BusinessShelf extends BusinessEntity<shelfRepository,Shelf> impleme
 	@Override
 	public void delete(long id) {
 		getValidEntity(id);
-//		long idProduct =read(id).getProductId();
-//		BUSINESS_PRODUCTS.updateProductsId(id,0,idProduct);
+		if (read(id).getProduct() != null) {
+			throw new IllegalArgumentException("Nao pode eliminar porque a prateleiraa ainda tem producto.");
+		}
 		repository.removeEntity(id);
 		
 		
@@ -40,8 +41,6 @@ public class BusinessShelf extends BusinessEntity<shelfRepository,Shelf> impleme
 	@Override
 	public void update(Shelf t) {
 		getValidEntity(t.getId());
-//		 long ProductIdAntigo = read(t.getId()).getProductId();
-//		BUSINESS_PRODUCTS.updateProductsId(t.getId(),t.getProductId(),ProductIdAntigo);
 		repository.editEntity(t);
 		
 	}
@@ -64,26 +63,22 @@ public class BusinessShelf extends BusinessEntity<shelfRepository,Shelf> impleme
 //		return SHELF_REP_INSTACE.geAllIdsarray();
 //	}
 	@Override
-	public void updateProductsId(List<Shelf> shelvesAntigos, List<Shelf> shelvesNovos, long id) {
+	public void updateProductsId(List<Shelf> shelvesAntigos) {
 		for(Shelf did : shelvesAntigos){
-			Shelf shelvesIdDelete=repository.getEntity(did);
-			shelvesIdDelete.setProduct(null);;
-			repository.editEntity(shelvesIdDelete);
-		
+			Shelf shelvesIdDelete=repository.getEntity(did.getId());
+			shelvesIdDelete.setProduct(null);
 		}
-		for(Shelf sid : shelvesNovos){
-			Shelf shelvesIdAdd=repository.getEntity(sid);
-			shelvesIdAdd.setProductId(id);
-			repository.editEntity(shelvesIdAdd);
-		}
-
-	
+//		for(Shelf sid : shelvesNovos){
+//			Shelf shelvesIdAdd=repository.getEntity(sid.getId());
+//			shelvesIdAdd.setProduct(product);
+//
+//		}
 	}
 	
-//	public ArrayList<Long> getshelvesId() {
-//		return  SHELF_REP_INSTACE.getShelfCenas();
-//		
-//	}
+	public List<Shelf> getshelvesEmpty() {
+		return  repository.getAllEmptyShelves();
+		
+	}
 	public String getName() {
 		return "A Prateleira";
 	}

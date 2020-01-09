@@ -43,14 +43,14 @@ public abstract class EntityRepository<T extends Entityy> {
 		em.merge(entity);
 	}
 	
+	public boolean isEmpty() {
+		return getAll().isEmpty();
+	}
 
 //	public long[] geAllIdsarray(){
 //		return getAllEntitiesIds().split(" ");
 //	}
 	
-	public boolean isEmpty() {
-		return getAll().isEmpty();
-	}
 //	
 //	public Collection<T> getAll(){
 //		return myMap.values();
@@ -65,10 +65,7 @@ public abstract class EntityRepository<T extends Entityy> {
 //		return myMap.keySet().stream().mapToLong(l -> l).toArray();
 //	}
 //	
-//
-//	
-//	
-//	
+
 //	public void printAll() {
 //		Iterator<T> prodInterator = getAll().iterator();
 //		while (prodInterator.hasNext()) {
