@@ -58,21 +58,13 @@ public class BusinessShelf extends BusinessEntity<shelfRepository,Shelf> impleme
 	 public Product getProductById(long id){
 			return BUSINESS_PRODUCTS.getId(id);
 		}
-//	@Override
-//	public long[] getAllIdsarray() {
-//		return SHELF_REP_INSTACE.geAllIdsarray();
-//	}
+	 
 	@Override
 	public void updateProductsId(List<Shelf> shelvesAntigos) {
 		for(Shelf did : shelvesAntigos){
 			Shelf shelvesIdDelete=repository.getEntity(did.getId());
 			shelvesIdDelete.setProduct(null);
 		}
-//		for(Shelf sid : shelvesNovos){
-//			Shelf shelvesIdAdd=repository.getEntity(sid.getId());
-//			shelvesIdAdd.setProduct(product);
-//
-//		}
 	}
 	
 	public List<Shelf> getshelvesEmpty() {

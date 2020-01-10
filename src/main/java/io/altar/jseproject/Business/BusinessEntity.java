@@ -47,10 +47,6 @@ public abstract class BusinessEntity <R extends EntityRepository<T>, T extends E
 		return false;
 	}
 
-	public long[] getAllIdsarray() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	public T getValidEntity( long id) {
 		T entity = getId(id);
 		if (entity == null) {

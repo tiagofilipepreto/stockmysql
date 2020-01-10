@@ -9,6 +9,6 @@ import io.altar.jseproject.model.Shelf;
 public interface BusinessProductsInterface extends BusinesssInterface<Product> {
 	
 	void updateProductsId(long ShelfeId, long ProductIdNovo, long ProductIdAntigo);
-	List<Shelf> getAllEmptyShelves();
+	List<Long> getAllEmptyShelves();
 	Product validEntityProducts(Product t);
 }

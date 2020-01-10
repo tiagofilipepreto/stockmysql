@@ -29,7 +29,7 @@ public class ProductControler extends Controler<BusinessProducts, ProductReposit
 	@GET
 	@Path("getshelvesEmpty")
 	@Produces("application/json")
-	public List<Shelf> getshelvesId() {
+	public List<Long> getshelvesId() {
 		return service.getAllEmptyShelves();
 	}
 	

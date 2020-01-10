@@ -91,13 +91,6 @@ public abstract class Controler <T extends BusinessEntity<R,E>,R extends EntityR
 		return service.isEmpty();
 	}
 	
-	@GET
-	@Path("getAllIds")
-	@Produces("application/json")
-	public long[] geAllIdsarray() {
-		return service.getAllIdsarray();
-	}
-	
 	public abstract D toDTO(E e);
 	public abstract E fromDTO(D d);
 	
